@@ -62,7 +62,10 @@ export default function DashboardPage() {
         fetch('/api/auth/me', { credentials: 'include' }),
       ]);
 
-      if (!dashRes.ok) throw new Error('Gagal mengambil data');
+      if (!dashRes.ok) {
+        const errJson = await dashRes.json().catch(() => null);
+        throw new Error(errJson?.message || `Server error (${dashRes.status})`);
+      }
       const json = await dashRes.json();
       setData(json.data);
 
