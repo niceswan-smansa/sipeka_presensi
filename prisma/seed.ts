@@ -171,15 +171,7 @@ async function main() {
 
       let kelas = await prisma.kelas.findUnique({ where: { nama: cleanName } });
       if (!kelas) {
-        let displayNama = cleanName;
-        if (angkatan === 10 && cleanName.startsWith("X-")) {
-          const num = parseInt(cleanName.replace("X-", ""));
-          if (num >= 1 && num <= 10) {
-            const letter = String.fromCharCode(64 + num);
-            displayNama = `10-${letter}`;
-          }
-        }
-        kelas = await prisma.kelas.create({ data: { nama: displayNama, angkatan } });
+        kelas = await prisma.kelas.create({ data: { nama: cleanName, angkatan } });
       }
 
       await prisma.siswa.createMany({
