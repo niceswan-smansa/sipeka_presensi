@@ -16,7 +16,7 @@ interface PerKelas {
 
 interface AktivitasItem {
   id: number;
-  waktu: string;
+  createdAt: string;
   user: { nama: string };
   aksi: string;
   detail: string;
@@ -26,7 +26,7 @@ interface DashboardData {
   todayCount: number;
   monthCount: number;
   totalSiswa: number;
-  perKelas: PerKelas[];
+  absenPerKelas: PerKelas[];
   recentActivities: AktivitasItem[];
 }
 
@@ -64,7 +64,7 @@ export default function DashboardPage() {
 
       if (!dashRes.ok) throw new Error('Gagal mengambil data');
       const json = await dashRes.json();
-      setData(json);
+      setData(json.data);
 
       if (userRes.ok) {
         const userJson = await userRes.json();
@@ -109,7 +109,7 @@ export default function DashboardPage() {
   const todayStr = formatDate(new Date(), 'full');
   const now = new Date();
   const monthStr = `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
-  const maxPerKelas = Math.max(...data.perKelas.map((k) => k.count), 1);
+  const maxPerKelas = Math.max(...data.absenPerKelas.map((k: PerKelas) => k.count), 1);
 
   return (
     <AuthLayout title="Dashboard" userName={userName}>
@@ -184,13 +184,13 @@ export default function DashboardPage() {
             <h2 className="mb-6 text-lg font-semibold text-gray-900">
               Absensi Hari Ini per Kelas
             </h2>
-            {data.perKelas.length === 0 ? (
+            {data.absenPerKelas.length === 0 ? (
               <p className="py-8 text-center text-sm text-gray-500">
                 Belum ada data absensi hari ini.
               </p>
             ) : (
               <div className="space-y-4">
-                {data.perKelas.map((item, idx) => (
+                {data.absenPerKelas.map((item, idx) => (
                   <div key={item.nama} className="flex items-center gap-3">
                     <span className="w-24 shrink-0 text-sm font-medium text-gray-700">
                       {item.nama}
@@ -234,7 +234,7 @@ export default function DashboardPage() {
                         {item.aksi} &mdash; {item.detail}
                       </p>
                       <p className="mt-1 text-xs text-gray-400">
-                        {formatDate(item.waktu, 'time')}
+                        {formatDate(item.createdAt, 'time')}
                       </p>
                     </div>
                   </li>
