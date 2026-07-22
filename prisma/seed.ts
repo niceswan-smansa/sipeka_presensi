@@ -48,7 +48,7 @@ async function main() {
       if (sheetName.startsWith("Sheet") || sheetName === "INDUK" || sheetName === "semua kls" || sheetName === "KELAS" || sheetName === "no-induk") continue;
 
       const rows: any[][] = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 });
-      const siswaBatch: { nis: string; nisn: string; nama: string; jenisKelamin: string; kelasId: number }[] = [];
+      const siswaBatch: { nis: string; nisn: string; nama: string; jenisKelamin: string; kelasId?: number }[] = [];
 
       let inData = false;
       for (const row of rows) {

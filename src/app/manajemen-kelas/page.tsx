@@ -80,7 +80,7 @@ export default function ManajemenKelasPage() {
       const json = await res.json();
       if (json.success) {
         setKelasList(json.data);
-        setGrouped(json.grouped);
+        setGrouped(json.grouped || {});
       }
     } catch {
       toast.error('Gagal memuat data kelas');

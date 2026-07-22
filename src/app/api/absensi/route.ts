@@ -38,7 +38,7 @@ export async function GET(request: Request) {
       for (const id of ids) {
         if (!(id in counts)) counts[id] = 0;
       }
-      return NextResponse.json({ success: true, counts });
+      return NextResponse.json({ success: true, data: { counts } });
     }
 
     const where: any = {};
@@ -205,7 +205,7 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json({ success: true, count }, { status: 201 });
+    return NextResponse.json({ success: true, data: { count } }, { status: 201 });
   } catch (error: any) {
     return NextResponse.json(
       { success: false, message: error.message || 'Internal server error' },

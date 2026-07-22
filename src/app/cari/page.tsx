@@ -64,8 +64,8 @@ export default function CariPage() {
     try {
       const res = await fetch(`/api/absensi?siswaIds=${ids}&tanggal=${thirtyDaysAgo.toISOString().split('T')[0]}`);
       const json = await res.json();
-      if (json.success && json.counts) {
-        setAbsenCounts(json.counts);
+      if (json.success && json.data?.counts) {
+        setAbsenCounts(json.data.counts);
       }
     } catch {
       // ignore

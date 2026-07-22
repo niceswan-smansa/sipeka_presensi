@@ -131,7 +131,7 @@ export default function RiwayatPage() {
         const json = await res.json();
         if (json.success) {
           setRiwayatList(json.data);
-          setPagination(json.pagination);
+          setPagination(json.pagination || { page: 1, limit: 20, total: 0, totalPages: 0 });
         }
       } catch {
         toast.error('Gagal memuat data riwayat');

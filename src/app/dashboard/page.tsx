@@ -68,8 +68,8 @@ export default function DashboardPage() {
 
       if (userRes.ok) {
         const userJson = await userRes.json();
-        if (userJson?.user?.nama) {
-          setUserName(userJson.user.nama);
+        if (userJson?.data?.nama) {
+          setUserName(userJson.data.nama);
         }
       }
     } catch (err) {

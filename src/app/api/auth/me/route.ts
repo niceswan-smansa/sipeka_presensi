@@ -28,7 +28,7 @@ export async function GET() {
       );
     }
 
-    return NextResponse.json({ success: true, user });
+    return NextResponse.json({ success: true, data: user });
   } catch (error: any) {
     return NextResponse.json(
       { success: false, message: error.message || 'Internal server error' },
