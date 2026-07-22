@@ -1,4 +1,4 @@
--- Jalankan di Supabase SQL Editor: https://supabase.com/dashboard/project/svxkduywlkelcenvdlzk/sql/new
+-- Jalankan di Supabase SQL Editor untuk project bbgprwjboiazbqlwxqmb
 
 CREATE TABLE "User" (
     id SERIAL PRIMARY KEY,
@@ -56,3 +56,12 @@ CREATE TABLE "Riwayat" (
 
 CREATE INDEX "Riwayat_userId_idx" ON "Riwayat"("userId");
 CREATE INDEX "Riwayat_createdAt_idx" ON "Riwayat"("createdAt");
+
+-- Seed users
+INSERT INTO "User" (username, password, nama, role) VALUES
+('admin', '$2a$10$YZGQbz4Fy0.Vej4P5suwmev8w7vfuT4ikoiAmg4Mujb58Rcm34DWK', 'Administrator', 'admin'),
+('shelly', '$2a$10$/61jw4OIVapCsUORHQE8LeEk67sF6a6NtM2.2O.HG2zstPkX9CCuO', 'Shelly Marini, S.Pd.', 'guru'),
+('sofayanto', '$2a$10$h0cg2R/CZPicN7tsDCTspeRZ/2jRO8mmGbfr8SJqwGg2Q.irthWkG', 'Sofayanto, S.Pd', 'guru'),
+('alif', '$2a$10$LMLa05dfhiBMgy0vgm/8Dul2lEu6mHjn0n8DwJop9tMMQEKe072eS', 'Alif Amalia Riski R., S.Pd', 'guru'),
+('fahris', '$2a$10$i4JdwbRKxmZJ1LZ/OcnTFuB/Lb9ZWvlI92M.w6i37sGYfyAtESOJK', 'Fahris Shiyam, S.Pd.I', 'guru'),
+('sulaihah', '$2a$10$nAPu.x2wpAGTokmvBhKG..TTVpLOZ8hSd.8Nbt/qOcfjyHfW4FJUe', 'Sulaihah, S.Pd', 'guru');
