@@ -25,8 +25,8 @@ export async function GET(request: Request) {
 
     if (search) {
       where.OR = [
-        { nama: { contains: search } },
-        { nis: { contains: search } },
+        { nama: { contains: search, mode: 'insensitive' } },
+        { nis: { contains: search, mode: 'insensitive' } },
       ];
     }
 
