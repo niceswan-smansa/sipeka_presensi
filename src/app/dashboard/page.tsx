@@ -115,14 +115,31 @@ export default function DashboardPage() {
     <AuthLayout title="Dashboard" userName={userName}>
       <div className="space-y-8 p-6">
         {/* Page header */}
-        <div>
-          <h2 className="text-sm font-medium uppercase tracking-widest text-gray-400">
-            Selamat datang, {userName}
-          </h2>
-          <h1 className="mt-1 text-3xl font-extrabold text-gray-900">
-            Dashboard
-          </h1>
-          <p className="mt-1 text-sm text-gray-500">{todayStr}</p>
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary-dark via-primary to-primary-light p-8 text-white shadow-lg">
+          <div className="absolute inset-0 opacity-10">
+            <svg width="100%" height="100%">
+              <defs>
+                <pattern id="batik" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+                  <circle cx="30" cy="30" r="20" fill="none" stroke="white" strokeWidth="1"/>
+                  <circle cx="30" cy="30" r="8" fill="white" opacity="0.5"/>
+                  <path d="M10 10 Q30 0 50 10 Q30 20 10 10" fill="none" stroke="white" strokeWidth="0.5" opacity="0.6"/>
+                  <path d="M10 50 Q30 40 50 50 Q30 60 10 50" fill="none" stroke="white" strokeWidth="0.5" opacity="0.6"/>
+                  <line x1="0" y1="30" x2="60" y2="30" stroke="white" strokeWidth="0.3" opacity="0.3"/>
+                  <line x1="30" y1="0" x2="30" y2="60" stroke="white" strokeWidth="0.3" opacity="0.3"/>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#batik)"/>
+            </svg>
+          </div>
+          <div className="relative">
+            <h2 className="text-sm font-medium uppercase tracking-widest text-white/70">
+              Selamat datang, {userName}
+            </h2>
+            <h1 className="mt-2 text-3xl font-extrabold text-white">
+              Dashboard
+            </h1>
+            <p className="mt-1 text-sm text-white/60">{todayStr}</p>
+          </div>
         </div>
 
         {/* Stats cards */}

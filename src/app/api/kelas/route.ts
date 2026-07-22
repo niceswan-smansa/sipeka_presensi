@@ -6,9 +6,18 @@ import { validateKelas } from '@/lib/validators';
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const angkatanParam = searchParams.get('angkatan');
+
+    const where: any = {};
+    if (angkatanParam) {
+      where.angkatan = parseInt(angkatanParam);
+    }
+
     const kelas = await prisma.kelas.findMany({
+      where,
       include: {
         _count: { select: { siswa: { where: { isActive: true } } } },
       },
