@@ -306,7 +306,7 @@ export default function RiwayatPage() {
                             </p>
                           </td>
                           <td className="px-3 py-3">
-                            <p className="font-semibold text-gray-900 text-xs">{item.user.nama}</p>
+                            <p className="font-semibold text-gray-900 text-xs">{item.user?.nama || '-'}</p>
                             <p className="text-[10px] text-gray-400">@{item.user.username}</p>
                           </td>
                           <td className="px-3 py-3">

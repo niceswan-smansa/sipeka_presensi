@@ -64,8 +64,8 @@ model Absensi {
 
 model Riwayat {
   id        Int       @id @default(autoincrement())
-  userId    Int
-  user      User      @relation(fields: [userId], references: [id])
+  userId    Int?
+  user      User?     @relation(fields: [userId], references: [id])
   aksi      String
   detail    String
   target    String?

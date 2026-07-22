@@ -17,7 +17,7 @@ interface PerKelas {
 interface AktivitasItem {
   id: number;
   createdAt: string;
-  user: { nama: string };
+  user: { nama: string } | null;
   aksi: string;
   detail: string;
 }
@@ -250,7 +250,7 @@ export default function DashboardPage() {
                     <span className="mt-0.5 flex h-2 w-2 shrink-0 rounded-full bg-blue-400" />
                     <div className="min-w-0 flex-1">
                       <p className="text-sm text-gray-900">
-                        <span className="font-semibold">{item.user.nama}</span>{' '}
+                        <span className="font-semibold">{item.user?.nama || 'Unknown'}</span>{' '}
                         {item.aksi} &mdash; {item.detail}
                       </p>
                       <p className="mt-1 text-xs text-gray-400">
