@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  username  String    @unique
+  password  String
+  nama      String
+  role      String    @default("guru")
+  createdAt DateTime  @default(now())
+  absensi   Absensi[]
+  riwayat   Riwayat[]
+}
+
+model Kelas {
+  id        Int       @id @default(autoincrement())
+  nama      String    @unique
+  angkatan  Int
+  waliKelas String?
+  createdAt DateTime  @default(now())
+  siswa     Siswa[]
+}
+
+model Siswa {
+  id           Int       @id @default(autoincrement())
+  nis          String
+  nisn         String
+  nama         String
+  jenisKelamin String
+  kelasId      Int
+  kelas        Kelas     @relation(fields: [kelasId], references: [id])
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  absensi      Absensi[]
+
+  @@unique([nis, kelasId])
+}
+
+model Absensi {
+  id              Int       @id @default(autoincrement())
+  siswaId         Int
+  siswa           Siswa     @relation(fields: [siswaId], references: [id])
+  tanggal         DateTime
+  jamPelajaran    Int
+  kategori        String
+  keterangan      String?
+  userId          Int
+  user            User      @relation(fields: [userId], references: [id])
+  createdAt       DateTime  @default(now())
+
+  @@index([siswaId])
+  @@index([tanggal])
+  @@index([userId])
+}
+
+model Riwayat {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id])
+  aksi      String
+  detail    String
+  target    String?
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
+  @@index([createdAt])
+}
