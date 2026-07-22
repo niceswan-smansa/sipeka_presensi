@@ -109,7 +109,7 @@ export async function POST(request: Request) {
       keterangan?: string;
     }[];
 
-    const siswaIds = [...new Set(entries.map((e) => e.siswaId))];
+    const siswaIds = Array.from(new Set(entries.map((e) => e.siswaId)));
     const siswaRecords = await prisma.siswa.findMany({
       where: { id: { in: siswaIds }, isActive: true },
       select: { id: true, nama: true, nis: true },
