@@ -128,7 +128,7 @@ export default function InputAbsensiPage() {
         });
         if (!res.ok) throw new Error('Gagal memuat kelas');
         const data = await res.json();
-        setKelasList(data);
+        setKelasList(data.data);
         setKelasId(null);
       } catch {
         toast.error('Gagal memuat daftar kelas');
@@ -154,7 +154,7 @@ export default function InputAbsensiPage() {
         });
         if (!res.ok) throw new Error('Gagal memuat siswa');
         const data = await res.json();
-        setSiswaList(data);
+        setSiswaList(data.data);
       } catch {
         toast.error('Gagal memuat daftar siswa');
       } finally {

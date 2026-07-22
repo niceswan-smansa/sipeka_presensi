@@ -56,27 +56,20 @@ export default function CariPage() {
   };
 
   const fetchAbsenCounts = async (siswaList: Siswa[]) => {
-    const now = new Date();
-    const thirtyDaysAgo = new Date(now);
+    if (siswaList.length === 0) return;
+    const ids = siswaList.map((s) => s.id).join(',');
+    const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-    const counts: Record<number, number> = {};
-
-    const results = await Promise.allSettled(
-      siswaList.map(async (s) => {
-        const res = await fetch(`/api/absensi?siswaId=${s.id}`);
-        const json = await res.json();
-        if (json.success && Array.isArray(json.data)) {
-          const count = json.data.filter((a: any) => {
-            const d = new Date(a.tanggal);
-            return d >= thirtyDaysAgo && d <= now;
-          }).length;
-          counts[s.id] = count;
-        }
-      }),
-    );
-
-    setAbsenCounts(counts);
+    try {
+      const res = await fetch(`/api/absensi?siswaIds=${ids}&tanggal=${thirtyDaysAgo.toISOString().split('T')[0]}`);
+      const json = await res.json();
+      if (json.success && json.counts) {
+        setAbsenCounts(json.counts);
+      }
+    } catch {
+      // ignore
+    }
   };
 
   const fetchSiswa = useCallback(async (query: string, angkatanVal: string, kelasIdVal: string) => {
@@ -113,6 +106,13 @@ export default function CariPage() {
   useEffect(() => {
     if (debounceRef.current) {
       clearTimeout(debounceRef.current);
+    }
+
+    if (!search.trim()) {
+      setSiswa([]);
+      setAbsenCounts({});
+      setHasSearched(false);
+      return;
     }
 
     debounceRef.current = setTimeout(() => {

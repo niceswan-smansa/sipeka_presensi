@@ -11,8 +11,35 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const tanggal = searchParams.get('tanggal');
     const siswaId = searchParams.get('siswaId');
+    const siswaIdsRaw = searchParams.get('siswaIds');
     const angkatan = searchParams.get('angkatan');
     const kelasId = searchParams.get('kelasId');
+
+    if (siswaIdsRaw) {
+      const ids = siswaIdsRaw.split(',').map(Number).filter((n) => !isNaN(n));
+      const dateFilter = tanggal ? new Date(tanggal) : new Date();
+      const startOfMonth = new Date(dateFilter.getFullYear(), dateFilter.getMonth(), 1);
+      const endOfMonth = new Date(dateFilter.getFullYear(), dateFilter.getMonth() + 1, 0, 23, 59, 59, 999);
+
+      const counts: Record<number, number> = {};
+      if (ids.length > 0) {
+        const results = await prisma.absensi.groupBy({
+          by: ['siswaId'],
+          where: {
+            siswaId: { in: ids },
+            tanggal: { gte: startOfMonth, lte: endOfMonth },
+          },
+          _count: { id: true },
+        });
+        for (const r of results) {
+          counts[r.siswaId] = r._count.id;
+        }
+      }
+      for (const id of ids) {
+        if (!(id in counts)) counts[id] = 0;
+      }
+      return NextResponse.json({ success: true, counts });
+    }
 
     const where: any = {};
 
