@@ -53,8 +53,8 @@ model Absensi {
   jamPelajaran    Int
   kategori        String
   keterangan      String?
-  userId          Int
-  user            User      @relation(fields: [userId], references: [id])
+  userId          Int?
+  user            User?     @relation(fields: [userId], references: [id])
   createdAt       DateTime  @default(now())
 
   @@index([siswaId])
